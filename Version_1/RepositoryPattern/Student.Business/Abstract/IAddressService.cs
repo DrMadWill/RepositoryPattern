@@ -1,4 +1,4 @@
-﻿using Student.DataAccess.Abstract.Communs;
+﻿using Student.Business.Abstract.Commons;
 using Student.Entity.Student;
 using System;
 using System.Collections.Generic;
@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Student.DataAccess.Abstract
+namespace Student.Business.Abstract
 {
-    public interface IAddressRepository : IBaseRepostitory<Address>
+    public interface IAddressService:IReadAccess<Address>,IDataChangeAccess<Address>
     {
     }
 }

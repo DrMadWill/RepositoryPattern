@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Student.Entity", "Student.E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Student.DataAccess", "Student.DataAccess\Student.DataAccess.csproj", "{0507D162-60CD-4253-986F-E76EC0630AC6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Student.Business", "Student.Business\Student.Business.csproj", "{1338B8F1-FFF2-419D-ADDD-7574874ED64C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{0507D162-60CD-4253-986F-E76EC0630AC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0507D162-60CD-4253-986F-E76EC0630AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0507D162-60CD-4253-986F-E76EC0630AC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1338B8F1-FFF2-419D-ADDD-7574874ED64C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1338B8F1-FFF2-419D-ADDD-7574874ED64C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1338B8F1-FFF2-419D-ADDD-7574874ED64C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1338B8F1-FFF2-419D-ADDD-7574874ED64C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

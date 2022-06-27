@@ -1,4 +1,5 @@
-﻿using Student.Entity.Student;
+﻿using Student.DataAccess.Abstract.Communs;
+using Student.Entity.Student;
 using System;
 using System.Collections.Generic;
 using System.Linq;

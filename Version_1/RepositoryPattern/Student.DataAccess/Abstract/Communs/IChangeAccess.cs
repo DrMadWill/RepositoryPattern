@@ -4,16 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Student.DataAccess.Abstract
+namespace Student.DataAccess.Abstract.Communs
 {
-    public interface IBaseRepostitory<T>
+    public interface IChangeAccess<T>
     {
-        Task<List<T>> GetAll();
-        Task<T> Get(int id);
         Task<T> Create(T Entity);
         Task<T> Update(T Entity);
         Task<T> Delete(T Entity);
-        Task Commit();
-        
     }
 }

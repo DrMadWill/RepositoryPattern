@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Student.DataAccess.Abstract;
+using Student.DataAccess.Abstract.Communs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ namespace Student.DataAccess.Concrete.MsSQL
         where TEntity : class
         where TContext : DbContext
     {
-        protected TContext _context;
+        protected readonly TContext _context;
 
         public EfBaseRepository(TContext context)
         {

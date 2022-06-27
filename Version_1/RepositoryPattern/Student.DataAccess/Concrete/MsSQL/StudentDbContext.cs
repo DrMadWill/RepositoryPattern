@@ -35,6 +35,11 @@ namespace Student.DataAccess.Concrete.MsSQL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Family>()
+                .HasIndex(x=>x.Code)
+                .IsUnique();
+
         }
     }
 }

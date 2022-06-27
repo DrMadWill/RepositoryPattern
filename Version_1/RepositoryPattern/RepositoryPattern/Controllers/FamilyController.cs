@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Student.Business.Abstract;
 using Student.DataAccess.Abstract;
 using Student.Entity.Student;
 using System.Threading.Tasks;
@@ -11,26 +12,28 @@ namespace RepositoryPattern.Controllers
     public class FamilyController : ControllerBase
     {
 
-        private IFamilyRepository _familyRepository;
+        private readonly IFamilyService _familyService;
 
-        public FamilyController(IFamilyRepository familyRepository)
+        public FamilyController(IFamilyService familyService)
         {
-            _familyRepository = familyRepository;
+            _familyService = familyService;
         }
 
         [HttpGet("Get")]
         public async Task<IActionResult> Get(int? id)
         {
-            if (id == null) return BadRequest();
+            if (id == null) return StatusCode(StatusCodes.Status422UnprocessableEntity);
 
-            var student = await _familyRepository.Get(id ?? 0);
+            var student = await _familyService.Get(id ?? 0);
+            if(student == null) return NotFound();
+
             return Ok(student);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var students = await _familyRepository.GetAll();
+            var students = await _familyService.GetAll();
             return Ok(students);
         }
 
@@ -38,27 +41,34 @@ namespace RepositoryPattern.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Family family)
         {
-            await _familyRepository.Create(family);
-            await _familyRepository.Commit();
+            if (!ModelState.IsValid) return StatusCode(StatusCodes.Status422UnprocessableEntity);
+
+            if (await _familyService.IsAddedCode(family.Code)) return StatusCode(StatusCodes.Status409Conflict);
+
+            await _familyService.Create(family);
+            if (family == null) return StatusCode(StatusCodes.Status500InternalServerError);
             return Ok(family);
         }
 
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] Family family)
         {
-            await _familyRepository.Update(family);
-            await _familyRepository.Commit();
+            if (family.Id == 0) return StatusCode(StatusCodes.Status422UnprocessableEntity); 
+            await _familyService.Update(family);
+            if (family == null) return StatusCode(StatusCodes.Status500InternalServerError);
+
             return Ok(family);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null) return BadRequest();
+            if (id == null) return StatusCode(StatusCodes.Status422UnprocessableEntity);
 
-            var student = await _familyRepository.Get(id ?? 0);
-            await _familyRepository.Delete(student);
-            await _familyRepository.Commit();
+            var student = await _familyService.Get(id ?? 0);
+            if (student == null) return NotFound();
+
+            await _familyService.Delete(student);
             return Ok(student);
         }
 

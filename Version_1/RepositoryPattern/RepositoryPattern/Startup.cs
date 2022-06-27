@@ -15,6 +15,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Student.Entity.Student;
+using Student.Business.Abstract;
+using Student.Business.Concrete;
 
 namespace RepositoryPattern
 {
@@ -32,18 +34,26 @@ namespace RepositoryPattern
         {
 
             services.AddControllers();
-            
-            services.AddSingleton<StudentDbContext>(option => new StudentDbContext(Configuration.GetConnectionString("Defaultdb")));
-            services.AddSingleton<IStudentRepository, StudentRepository>();
-            services.AddSingleton<IFamilyRepository, FamilyRepository>();
-            
 
-            //services.AddDbContext<StudentDbContext>(option =>
-            //{
-            //    option.UseSqlServer(Configuration.GetConnectionString("Defaultdb"));
-            //});
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+            
+            services.AddScoped<StudentDbContext>(option => new StudentDbContext(Configuration.GetConnectionString("Defaultdb")));
+            // ================== Repository ==============================
+            services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<IFamilyRepository, FamilyRepository>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<IGuardianRepository, GuardianRepository>();
+            services.AddScoped<IGuardianTypeRepository, GuardianTypeRepository>();
 
-            //services.AddTransient<IStudentRepository, StudentRepository>();
+            // ==================== Service ============================
+            services.AddScoped<IFamilyService, FamilyService>();
+            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IAddressService, AddressService>();
+            services.AddScoped<IGuardianTypeService, GuardianTypeService>();
+
+            services.AddSwaggerGen();
 
 
         }
@@ -51,6 +61,12 @@ namespace RepositoryPattern
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Repository Pattern API V1");
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

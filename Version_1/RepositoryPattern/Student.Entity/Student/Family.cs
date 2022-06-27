@@ -16,6 +16,13 @@ namespace Student.Entity.Student
         [Required]
         public string Name { get; set; }
 
+        [StringLength(7, MinimumLength = 7)]
+        [Required]
+        public string Code { get; set; }
+
+        public DateTime CreateAt { get; set; } = DateTime.Now;
+
+
         public IList<Student> Students { get; set; }
         public IList<Guardian> Guardians { get; set; }
 

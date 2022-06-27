@@ -22,7 +22,8 @@ namespace Student.Entity.Student
         [Required]
         public string LName { get; set; }
         public DateTime BirthDate { get; set; }
-        public DateTime StartDate { get; set; } = DateTime.Now;
+        public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public DateTime CreateAt { get; set; } = DateTime.Now;
     }
 }
