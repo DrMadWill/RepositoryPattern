@@ -10,6 +10,6 @@ namespace Student.DataAccess.Abstract
 {
     public interface IGuardianTypeRepository: IBaseRepostitory<GuardianType>
     {
-
+        Task<bool> IsFounded(int id);
     }
 }

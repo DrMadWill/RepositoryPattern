@@ -10,5 +10,8 @@ namespace Student.Business.Abstract
 {
     public interface IGuardianTypeService:IReadAccess<GuardianType>,IDataChangeAccess<GuardianType>
     {
+        
+        Task<bool> IsFounded(int id);
+
     }
 }

@@ -81,5 +81,9 @@ namespace Student.Business.Concrete
             return entity;
         }
 
+        public async Task<bool> IsFounded(int id)
+        {
+            return await _guardianTypeRepository.IsFounded(id);
+        }
     }
 }
