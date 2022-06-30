@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Student.Business.Abstract;
-using Student.DataAccess.Abstract;
 using Student.Entity.Student;
 using System.Threading.Tasks;
 
@@ -9,23 +8,22 @@ namespace RepositoryPattern.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FamilyController : ControllerBase
+    public class FamiliesController : ControllerBase
     {
-
         private readonly IFamilyService _familyService;
 
-        public FamilyController(IFamilyService familyService)
+        public FamiliesController(IFamilyService familyService)
         {
             _familyService = familyService;
         }
 
-        [HttpGet("Get")]
+        [HttpGet("{id?}")]
         public async Task<IActionResult> Get(int? id)
         {
             if (id == null) return StatusCode(StatusCodes.Status422UnprocessableEntity);
 
             var student = await _familyService.Get(id ?? 0);
-            if(student == null) return NotFound();
+            if (student == null) return NotFound();
 
             return Ok(student);
         }
@@ -53,14 +51,14 @@ namespace RepositoryPattern.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] Family family)
         {
-            if (family.Id == 0) return StatusCode(StatusCodes.Status422UnprocessableEntity); 
+            if (family.Id == 0) return StatusCode(StatusCodes.Status422UnprocessableEntity);
             await _familyService.Update(family);
             if (family == null) return StatusCode(StatusCodes.Status500InternalServerError);
 
             return Ok(family);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id?}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return StatusCode(StatusCodes.Status422UnprocessableEntity);
@@ -71,6 +69,7 @@ namespace RepositoryPattern.Controllers
             await _familyService.Delete(student);
             return Ok(student);
         }
+
 
     }
 }

@@ -10,29 +10,28 @@ namespace RepositoryPattern.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentController : ControllerBase
+    public class StudnetsController : ControllerBase
     {
-
         private readonly IStudentService _studentService;
         private readonly IFamilyService _familyService;
 
-        public StudentController(IStudentService studentService, IFamilyService familyService)
+        public StudnetsController(IStudentService studentService, IFamilyService familyService)
         {
             _studentService = studentService;
             _familyService = familyService;
         }
 
-        [HttpGet("Get")]
+        [HttpGet("{id?}")]
         public async Task<IActionResult> Get(int? id)
         {
 
             if (id == null || id == 0) return StatusCode(StatusCodes.Status422UnprocessableEntity);
-            
+
             var student = await _studentService.Get(id ?? 0);
-            if(student == null) return NotFound();
-            
+            if (student == null) return NotFound();
+
             return Ok(student);
-        }   
+        }
 
 
         [HttpGet]
@@ -65,7 +64,7 @@ namespace RepositoryPattern.Controllers
             return Ok(student);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id?}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return StatusCode(StatusCodes.Status422UnprocessableEntity);

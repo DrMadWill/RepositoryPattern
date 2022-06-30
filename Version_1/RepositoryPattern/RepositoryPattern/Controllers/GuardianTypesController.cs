@@ -8,16 +8,16 @@ namespace RepositoryPattern.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GuardianTypeController : ControllerBase
+    public class GuardianTypesController : ControllerBase
     {
         private readonly IGuardianTypeService _guardianTypeService;
 
-        public GuardianTypeController(IGuardianTypeService guardianTypeService)
+        public GuardianTypesController(IGuardianTypeService guardianTypeService)
         {
             _guardianTypeService = guardianTypeService;
         }
 
-        [HttpGet("Get")]
+        [HttpGet("{id?}")]
         public async Task<IActionResult> Get(int? id)
         {
 
@@ -35,7 +35,7 @@ namespace RepositoryPattern.Controllers
             var guardianType = await _guardianTypeService.GetAll();
 
             return Ok(guardianType);
-            
+
         }
 
 
@@ -43,7 +43,7 @@ namespace RepositoryPattern.Controllers
         public async Task<IActionResult> Create([FromBody] GuardianType guardianType)
         {
             if (!ModelState.IsValid) return StatusCode(StatusCodes.Status422UnprocessableEntity);
-            
+
             await _guardianTypeService.Create(guardianType);
             if (guardianType == null) return StatusCode(StatusCodes.Status500InternalServerError);
             return Ok((guardianType));
@@ -58,7 +58,7 @@ namespace RepositoryPattern.Controllers
             return Ok(guardianType);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id?}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return StatusCode(StatusCodes.Status422UnprocessableEntity);
@@ -71,6 +71,5 @@ namespace RepositoryPattern.Controllers
 
             return Ok(gardianType);
         }
-
     }
 }

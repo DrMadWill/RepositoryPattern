@@ -8,19 +8,20 @@ namespace RepositoryPattern.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AddressController : ControllerBase
+    public class AddressesController : ControllerBase
     {
+
         private readonly IAddressService _addressService;
         private readonly IStudentService _studentService;
 
-        public AddressController(IAddressService addressService, IStudentService studentService)
+        public AddressesController(IAddressService addressService, IStudentService studentService)
         {
             _addressService = addressService;
             _studentService = studentService;
         }
 
 
-        [HttpGet("Get")]
+        [HttpGet("{id?}")]
         public async Task<IActionResult> Get(int? id)
         {
 
@@ -46,7 +47,7 @@ namespace RepositoryPattern.Controllers
             if (!ModelState.IsValid) return StatusCode(StatusCodes.Status422UnprocessableEntity);
             if (!(await _studentService.IsFounded(address.Id))) return NotFound("No student with the same id was found");
             await _addressService.Create(address);
-            if(address == null) return StatusCode(StatusCodes.Status500InternalServerError);
+            if (address == null) return StatusCode(StatusCodes.Status500InternalServerError);
             return Ok((address));
         }
 
@@ -60,7 +61,7 @@ namespace RepositoryPattern.Controllers
             return Ok(address);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id?}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return StatusCode(StatusCodes.Status422UnprocessableEntity);
@@ -73,7 +74,6 @@ namespace RepositoryPattern.Controllers
 
             return Ok(address);
         }
-
 
     }
 }

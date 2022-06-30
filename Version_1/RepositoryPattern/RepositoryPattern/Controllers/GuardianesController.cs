@@ -4,22 +4,23 @@ using Student.Business.Abstract;
 using Student.Entity.Student;
 using System.Threading.Tasks;
 
+
 namespace RepositoryPattern.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GuardianController : ControllerBase
+    public class GuardianesController : ControllerBase
     {
         private readonly IGuardianService _guardianService;
         private readonly IGuardianTypeService _guardianTypeService;
 
-        public GuardianController(IGuardianService guardianService,IGuardianTypeService guardianTypeService)
+        public GuardianesController(IGuardianService guardianService, IGuardianTypeService guardianTypeService)
         {
             _guardianService = guardianService;
             _guardianTypeService = guardianTypeService;
         }
 
-        [HttpGet("Get")]
+        [HttpGet("{id?}")]
         public async Task<IActionResult> Get(int? id)
         {
             if (id == null) return StatusCode(StatusCodes.Status422UnprocessableEntity);
@@ -43,7 +44,7 @@ namespace RepositoryPattern.Controllers
         {
             if (!ModelState.IsValid) return StatusCode(StatusCodes.Status422UnprocessableEntity);
 
-            if(!(await _guardianTypeService.IsFounded(guardian.GuardianTypeId))) return StatusCode(StatusCodes.Status409Conflict,"Guardian Type Not Founded");
+            if (!(await _guardianTypeService.IsFounded(guardian.GuardianTypeId))) return StatusCode(StatusCodes.Status409Conflict, "Guardian Type Not Founded");
 
             await _guardianService.Create(guardian);
             if (guardian == null) return StatusCode(StatusCodes.Status500InternalServerError);
@@ -60,7 +61,7 @@ namespace RepositoryPattern.Controllers
             return Ok(guardian);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id?}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return StatusCode(StatusCodes.Status422UnprocessableEntity);
@@ -71,7 +72,6 @@ namespace RepositoryPattern.Controllers
             await _guardianService.Delete(student);
             return Ok(student);
         }
-
 
     }
 }
