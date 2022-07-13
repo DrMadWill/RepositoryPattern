@@ -29,7 +29,7 @@ namespace Student.DataAccess.Concrete.MsSQL
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(this._connectionStrings);
+            optionsBuilder.UseSqlite(this._connectionStrings);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

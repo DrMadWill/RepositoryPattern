@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Student.DataAccess.Migrations
 {
-    public partial class InitialDb : Migration
+    public partial class initalDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,9 +11,11 @@ namespace Student.DataAccess.Migrations
                 name: "Families",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Code = table.Column<string>(type: "TEXT", maxLength: 7, nullable: false),
+                    CreateAt = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -24,9 +26,9 @@ namespace Student.DataAccess.Migrations
                 name: "GuardianTypes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -37,14 +39,15 @@ namespace Student.DataAccess.Migrations
                 name: "Students",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FamilyId = table.Column<int>(type: "int", nullable: false),
-                    FName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    LName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    FamilyId = table.Column<int>(type: "INTEGER", nullable: false),
+                    FName = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    LName = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreateAt = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,14 +64,14 @@ namespace Student.DataAccess.Migrations
                 name: "Guardians",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FamilyId = table.Column<int>(type: "int", nullable: false),
-                    GuardianTypeId = table.Column<int>(type: "int", nullable: false),
-                    FName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    LName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(254)", maxLength: 254, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    FamilyId = table.Column<int>(type: "INTEGER", nullable: false),
+                    GuardianTypeId = table.Column<int>(type: "INTEGER", nullable: false),
+                    FName = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    LName = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 254, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "TEXT", maxLength: 15, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -91,10 +94,10 @@ namespace Student.DataAccess.Migrations
                 name: "Addresses",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Adress2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PostCode = table.Column<int>(type: "int", maxLength: 10, nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false),
+                    Adress = table.Column<string>(type: "TEXT", nullable: false),
+                    Adress2 = table.Column<string>(type: "TEXT", nullable: true),
+                    PostCode = table.Column<int>(type: "INTEGER", maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -106,6 +109,12 @@ namespace Student.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Families_Code",
+                table: "Families",
+                column: "Code",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Guardians_FamilyId",

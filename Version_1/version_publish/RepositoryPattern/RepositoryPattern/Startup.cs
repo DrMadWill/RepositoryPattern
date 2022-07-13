@@ -36,7 +36,12 @@ namespace RepositoryPattern
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
             
-            services.AddScoped<StudentDbContext>(option => new StudentDbContext(Configuration.GetConnectionString("Defaultdb")));
+            services.AddScoped<StudentDbContext>(option => new StudentDbContext(Configuration.GetConnectionString("LocalAppDb")));
+            // Add Database
+            //services.AddDbContext<StudentDbContext>(options =>
+            //{
+            //    options.UseSqlite(Configuration.GetConnectionString("LocalDb"));
+            //});
             // ================== Repository ==============================
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<IFamilyRepository, FamilyRepository>();
