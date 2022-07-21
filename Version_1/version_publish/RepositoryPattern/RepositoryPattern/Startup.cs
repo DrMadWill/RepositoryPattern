@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Student.Entity.Student;
 using Student.Business.Abstract;
 using Student.Business.Concrete;
+using Microsoft.OpenApi.Models;
 
 namespace RepositoryPattern
 {
@@ -55,7 +56,19 @@ namespace RepositoryPattern
             services.AddScoped<IAddressService, AddressService>();
             services.AddScoped<IGuardianTypeService, GuardianTypeService>();
 
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c=> new OpenApiInfo
+            {
+                Version = "v1",
+                Title = "Students Course Api",
+                Description = "Students Detail Data",
+                TermsOfService = new Uri("https://github.com/DrMadWill/RepositoryPattern"),
+                Contact = new OpenApiContact
+                {
+                    Name = "Nofel Salahov (DR Mad Will)",
+                    Email = "nofelsalahov9@gmail.com",
+                    Url  = new Uri("https://www.linkedin.com/in/drmadwill/")
+                }
+            });
 
 
         }
@@ -75,6 +88,7 @@ namespace RepositoryPattern
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Repository Pattern API V1");
+                c.RoutePrefix = String.Empty;
             });
 
             app.UseHttpsRedirection();
