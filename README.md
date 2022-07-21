@@ -1,7 +1,5 @@
 # Repository Pattern (Students Course API) 
-## Api Publish Link => [Api Link](https://repopattern.herokuapp.com/)
-## Api Publish Link => https://repopattern.herokuapp.com/
-![repo](/Version_1/repos.png)
+
 ## Introduction 
 > In this application, we will look at 'repository pattern' implementations. The general application will be as follows.An app that shows the data recorded during the course registration of requirements.This Project uses swagger. 
 ### Database 
@@ -11,6 +9,10 @@
 ![DbStudent](https://i.stack.imgur.com/bVYB3.png) **Qeyd:** Families Table Added Colum Code. Code unique text. MaxLength 7;
 ## Version 1 => App
 ***
+## Api Publish Link => [Api Link](https://repopattern.herokuapp.com/)
+## Api Publish Link => https://repopattern.herokuapp.com/
+![repo](/Version_1/repos.png)
+
 ### Overview
 > The program uses a simple 'Repository Pattern' structure. In this program,
 > - App version
