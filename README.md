@@ -7,7 +7,7 @@
 - **SQLite**
 - Desigen
 ![DbStudent](https://i.stack.imgur.com/bVYB3.png) **Qeyd:** Families Table Added Colum Code. Code unique text. MaxLength 7;
-## Version 1 => App
+## Version 1 => App : Use Minimal Repository Pattern 
 ***
 ## Api Publish Link => [Api Link](https://repopattern.herokuapp.com/)
 ## Api Publish Link => https://repopattern.herokuapp.com/
@@ -104,3 +104,8 @@
 
 > after enjoy yourself.
 
+## Version 2 => App : Uses Unit Of Work Pattern, Generic Repostory and Maximal Repository Pattern 
+***
+> - Test Complated.
+
+> - And Now. Is Writen ............
