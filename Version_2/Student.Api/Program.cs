@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Student.DataAccess.Abstract;
 using Student.DataAccess.Concrete;
 using Student.DataAccess.Concrete.MsSql;
-
+using Student.Api.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,9 +20,7 @@ builder.Services.AddDbContext<StudentDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Local"));
 });
 
-
-builder.Services.AddScoped(typeof(IBaseRepostitory<,>), typeof(EfGenericRepository<,>));
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.RegisterAppServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

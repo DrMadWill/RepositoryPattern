@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Student.Business.Abstract;
 using Student.DataAccess.Abstract;
 using Student.Entity.Student;
 
@@ -9,10 +10,11 @@ namespace Student.Api.Controllers
     [ApiController]
     public class FamiliesController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public FamiliesController(IUnitOfWork unitOfWork)
+        private readonly IFamiliesService _familyService;
+
+        public FamiliesController(IFamiliesService familyService)
         {
-            _unitOfWork = unitOfWork;
+            _familyService = familyService;
         }
 
         [HttpGet("{id?}")]
@@ -20,16 +22,16 @@ namespace Student.Api.Controllers
         {
             if (id == null) return StatusCode(StatusCodes.Status422UnprocessableEntity);
 
-            var family = await _unitOfWork.FamilyRepository.GetFrist( x =>x.Id == id );
-            if (family == null) return NotFound();
+            var student = await _familyService.GetFrist(id ?? 0);
+            if (student == null) return NotFound();
 
-            return Ok(family);
+            return Ok(student);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var students = await _unitOfWork.FamilyRepository.GetAllList();
+            var students = await _familyService.GetAll();
             return Ok(students);
         }
 
@@ -39,10 +41,9 @@ namespace Student.Api.Controllers
         {
             if (!ModelState.IsValid) return StatusCode(StatusCodes.Status422UnprocessableEntity);
 
-            if ((await _unitOfWork.FamilyRepository.GetFrist(f=>f.Code == family.Code)) != null) return StatusCode(StatusCodes.Status409Conflict);
+            if (await _familyService.IsAlreadyAddedCode(family.Code)) return StatusCode(StatusCodes.Status409Conflict);
 
-            await _unitOfWork.FamilyRepository.Add(family);
-            await _unitOfWork.Commit();
+            await _familyService.Add(family);
             if (family == null) return StatusCode(StatusCodes.Status500InternalServerError);
             return Ok(family);
         }
@@ -51,9 +52,7 @@ namespace Student.Api.Controllers
         public async Task<IActionResult> Update([FromBody] Family family)
         {
             if (family.Id == 0) return StatusCode(StatusCodes.Status422UnprocessableEntity);
-            await _unitOfWork.FamilyRepository.Update(family);
-            await _unitOfWork.Commit();
-
+            await _familyService.Update(family);
             if (family == null) return StatusCode(StatusCodes.Status500InternalServerError);
 
             return Ok(family);
@@ -64,13 +63,11 @@ namespace Student.Api.Controllers
         {
             if (id == null) return StatusCode(StatusCodes.Status422UnprocessableEntity);
 
-            var family = await _unitOfWork.FamilyRepository.GetFrist(x => x.Id == id);
-            if (family == null) return NotFound();
+            var student = await _familyService.Get(id ?? 0);
+            if (student == null) return NotFound();
 
-            await _unitOfWork.FamilyRepository.Delete(family);
-            await _unitOfWork.Commit();
-
-            return Ok(family);
+            await _familyService.Delete(student);
+            return Ok(student);
         }
 
     }

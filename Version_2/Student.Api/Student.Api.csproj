@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Student.Business\Student.Business.csproj" />
     <ProjectReference Include="..\Student.DataAccess\Student.DataAccess.csproj" />
     <ProjectReference Include="..\Student.Entity\Student.Entity.csproj" />
   </ItemGroup>
