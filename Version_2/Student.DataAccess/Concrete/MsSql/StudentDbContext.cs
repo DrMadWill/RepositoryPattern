@@ -1,19 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Student.Entity.Student;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Student.DataAccess.Concrete.MsSql
 {
     public class StudentDbContext : DbContext
     {
-        public StudentDbContext(DbContextOptions<StudentDbContext> options) : base(options) { }
-
-        
+        public StudentDbContext(DbContextOptions<StudentDbContext> options) : base(options)
+        {
+        }
 
         public DbSet<Entity.Student.Student> Students { get; set; }
         public DbSet<Address> Addresses { get; set; }

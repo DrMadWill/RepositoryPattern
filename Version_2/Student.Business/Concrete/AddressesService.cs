@@ -1,17 +1,13 @@
 ﻿using Student.Business.Abstract;
 using Student.DataAccess.Abstract;
 using Student.Entity.Student;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Student.Business.Concrete
 {
     public class AddressesService : IAddressesService
     {
         private readonly IUnitOfWork _unitOfWork;
+
         public AddressesService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -49,7 +45,7 @@ namespace Student.Business.Concrete
         public async Task<bool> IsAlreadyAdded(int id)
         {
             if (id == 0) return false;
-            var element =await _unitOfWork.AddressRepository.Count(x => x.Id == id);
+            var element = await _unitOfWork.AddressRepository.Count(x => x.Id == id);
             if (element == 0) return false;
             else return true;
         }
@@ -60,7 +56,5 @@ namespace Student.Business.Concrete
             await _unitOfWork.Commit();
             return upEntity;
         }
-
-
     }
 }

@@ -1,21 +1,16 @@
 ﻿using Student.Business.Abstract;
 using Student.DataAccess.Abstract;
-using Student.Entity;
 using Student.Entity.Student;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Student.Business.Concrete
 {
     public class FamilyService : IFamiliesService
     {
         private readonly IUnitOfWork _unitOfWork;
+
         public FamilyService(IUnitOfWork unitOfWork)
         {
-                _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Family> Add(Family entity)
@@ -24,7 +19,7 @@ namespace Student.Business.Concrete
             await _unitOfWork.Commit();
             return entity;
         }
-       
+
         public async Task<Family> Delete(int id)
         {
             if (id > 0)
@@ -44,12 +39,12 @@ namespace Student.Business.Concrete
 
         public async Task<Family> GetFrist(int id)
         {
-            return await _unitOfWork.FamilyRepository.GetFrist(x=>x.Id == id);
+            return await _unitOfWork.FamilyRepository.GetFrist(x => x.Id == id);
         }
 
         public async Task<Family> Update(Family entity)
         {
-            var upEntity =  await _unitOfWork.FamilyRepository.Update(entity);
+            var upEntity = await _unitOfWork.FamilyRepository.Update(entity);
             await _unitOfWork.Commit();
             return upEntity;
         }
@@ -62,5 +57,12 @@ namespace Student.Business.Concrete
             else return true;
         }
 
+        public async Task<bool> IsAlreadyAddedCode(string code)
+        {
+            if (string.IsNullOrEmpty(code)) return false;
+            var element = await _unitOfWork.FamilyRepository.Count(x => x.Code.ToLower() == code.ToLower());
+            if (element == 0) return false;
+            else return true;
+        }
     }
 }

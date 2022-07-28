@@ -30,6 +30,5 @@ namespace Student.Api.Extensions
             services.AddScoped<IFamiliesService, FamilyService>();
             return services;
         }
-
     }
 }

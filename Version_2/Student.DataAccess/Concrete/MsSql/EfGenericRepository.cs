@@ -1,12 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Student.DataAccess.Abstract;
 using Student.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Student.DataAccess.Concrete.MsSql
 {
@@ -36,7 +31,6 @@ namespace Student.DataAccess.Concrete.MsSql
             return await GetAllIncluding(includeProperties).ToListAsync();
         }
 
-
         public IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] includeProperties)
         {
             var query = GetAll();
@@ -47,7 +41,7 @@ namespace Student.DataAccess.Concrete.MsSql
 
         public async ValueTask<TEntity> Find(TPrimary id)
         {
-            return await Table.FindAsync(id);   
+            return await Table.FindAsync(id);
         }
 
         public IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
@@ -67,7 +61,6 @@ namespace Student.DataAccess.Concrete.MsSql
             return await Table.FirstOrDefaultAsync(predicate);
         }
 
-
         public async Task<TEntity> Add(TEntity entity)
         {
             await Table.AddAsync(entity);
@@ -84,8 +77,6 @@ namespace Student.DataAccess.Concrete.MsSql
             return await Table.AnyAsync(predicate);
         }
 
-        
-
         public async Task<int> Count()
         {
             return await Table.CountAsync();
@@ -96,12 +87,11 @@ namespace Student.DataAccess.Concrete.MsSql
             return await Table.CountAsync(predicate);
         }
 
-        private void BindIncludeProperties(IQueryable<TEntity> query,IEnumerable<Expression<Func<TEntity, object>>> includeProperties)
+        private void BindIncludeProperties(IQueryable<TEntity> query, IEnumerable<Expression<Func<TEntity, object>>> includeProperties)
         {
             includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }
 
-       
         public async Task<TEntity> Update(TEntity entity)
         {
             //Table.Update(entity);
@@ -123,13 +113,11 @@ namespace Student.DataAccess.Concrete.MsSql
             {
                 _dbContext.Entry(entity).State = EntityState.Deleted;
             }
-
         }
-        
+
         public void Dispose()
         {
             _dbContext?.Dispose();
         }
-
     }
 }

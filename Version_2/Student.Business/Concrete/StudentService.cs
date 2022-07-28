@@ -1,17 +1,12 @@
 ﻿using Student.Business.Abstract;
 using Student.DataAccess.Abstract;
-using Student.Entity.Student;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Student.Business.Concrete
 {
-    public class StudentService: IStudentService
+    public class StudentService : IStudentService
     {
         private readonly IUnitOfWork _unitOfWork;
+
         public StudentService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;

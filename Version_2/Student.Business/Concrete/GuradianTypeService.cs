@@ -1,17 +1,13 @@
 ﻿using Student.Business.Abstract;
 using Student.DataAccess.Abstract;
 using Student.Entity.Student;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Student.Business.Concrete
 {
     public class GuradianTypeService : IGuradianTypeService
     {
         private readonly IUnitOfWork _unitOfWork;
+
         public GuradianTypeService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -52,6 +48,7 @@ namespace Student.Business.Concrete
             await _unitOfWork.Commit();
             return upEntity;
         }
+
         public async Task<bool> IsAlreadyAdded(int id)
         {
             if (id == 0) return false;

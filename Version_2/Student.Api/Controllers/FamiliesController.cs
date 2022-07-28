@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Student.Business.Abstract;
-using Student.DataAccess.Abstract;
 using Student.Entity.Student;
 
 namespace Student.Api.Controllers
@@ -35,7 +33,6 @@ namespace Student.Api.Controllers
             return Ok(students);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Family family)
         {
@@ -63,12 +60,11 @@ namespace Student.Api.Controllers
         {
             if (id == null) return StatusCode(StatusCodes.Status422UnprocessableEntity);
 
-            var student = await _familyService.Get(id ?? 0);
-            if (student == null) return NotFound();
+            var family = await _familyService.GetFrist(id ?? 0);
+            if (family == null) return NotFound();
 
-            await _familyService.Delete(student);
-            return Ok(student);
+            await _familyService.Delete(family.Id);
+            return Ok(family);
         }
-
     }
 }
